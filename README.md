@@ -9,7 +9,7 @@
 3. Build the Docker containers:
 
 ```bash
-docker compose build
+docker compose build --no-cache
 ```
 
 4. Start the Docker containers:
