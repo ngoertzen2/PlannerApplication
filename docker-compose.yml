@@ -28,6 +28,9 @@ services:
     container_name: planner-frontend
     ports:
       - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
 
