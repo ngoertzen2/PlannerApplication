@@ -27,12 +27,17 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: invalidCredentialsMessage });
     }
 
+    console.log("User:", user);
+    console.log("Password hash:", user.password_hash);
+
+    req.session.user = {
+      id: user.id,
+      username: user.username,
+    };
+
     res.json({
       success: true,
-      user: {
-        id: user.id,
-        username: user.username
-      }
+      user: req.session.user
     });
 
   } catch (err) {
@@ -58,4 +63,14 @@ export const register = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Registration failed" });
   }
+};
+
+export const requireAuth = (req, res, next) => {
+  if (!req.session || !req.session.user) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
+  }
+
+  next();
 };

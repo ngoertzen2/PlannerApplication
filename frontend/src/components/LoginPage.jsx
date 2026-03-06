@@ -1,17 +1,18 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import GeneralButton from "../components/general/GeneralButton";
 // React Router Dom
 import { useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaEye, FaEyeSlash } from "react-icons/fa";
 import API_BASE from "../constants.js";
+import UserDataContext from "../../context/UserDataContext";
 
 /**
  * @summary     Login page, redirects to MS Login
  * @exports     LoginPage
  */
 const LoginPage = () => {
-  // useNavigate (React Router Dom)
   const navigate = useNavigate();
+  const { userData, setUserData } = useContext(UserDataContext);
 
   //Use state hooks
   const [login, setLogin] = React.useState({
@@ -23,7 +24,14 @@ const LoginPage = () => {
     password: false,
   });
   const [mode, setMode] = React.useState("login");
+  const [showPassword, setShowPassword] = React.useState(false);
 
+  // redirect to logged in user
+  React.useEffect(() => {
+    if (userData) {
+      navigate("/");
+    }
+  }, [navigate, setUserData]);
   const signIn = async () => {
 
     const newErrors = {};
@@ -72,6 +80,8 @@ const LoginPage = () => {
         timer: 1200,
         showConfirmButton: false,
       });
+
+      setUserData(data.user);
 
       navigate("/");
 
@@ -165,14 +175,24 @@ const LoginPage = () => {
             <p className="font-primary text-xl font-bold">
               Password:
             </p>
-            <textarea
-              name='password'
-              value={login.password}
-              onChange={handleChange}
-              placeholder="Password..."
-              className="w-full border border-black bg-transparent p-2 outline-none resize-none"
-              rows={1}
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={login.password}
+                onChange={handleChange}
+                placeholder="Password..."
+                className="w-full border border-black bg-transparent p-2 pr-10 outline-none"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600"
+              >
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
+            </div>
             {errors.password && (
               <p className="font-primary text-xs font-thin text-red-500">
                 * This field is required
