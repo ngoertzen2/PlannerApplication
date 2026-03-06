@@ -1,17 +1,16 @@
-require("dotenv").config()
+import express from "express";
+import cors from "cors";
+import authRoutes from "./routes/authRoutes.js";
 
-const express = require("express")
-const cors = require("cors")
-const { Pool } = require("pg")
+const app = express();
 
-const app = express()
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-app.get("/test", (req, res) => {
-  res.json({ message: "Backend working" })
-})
+app.use("/api/auth", authRoutes);
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000")
-})
+const PORT = 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

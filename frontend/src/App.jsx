@@ -1,15 +1,18 @@
 import { FaRegCalendarAlt } from "react-icons/fa"
+import LoginPage from "./components/LoginPage.jsx"
+import MainPage from "./components/MainPage.jsx"
+import { Routes, Route, Link } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="text-center">
-
-        <FaRegCalendarAlt className="text-6xl text-gray-800 mx-auto mb-4" />
-
-        <h1 className="text-3xl font-bold">Planner</h1>
-
-      </div>
+    <div>
+      
+            
+      {/* Route Definitions */}
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
     </div>
   )
 }
