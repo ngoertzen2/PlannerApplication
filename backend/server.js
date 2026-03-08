@@ -2,6 +2,7 @@ import express from "express";
 import session from "express-session";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
+import tasksRoutes from "./routes/tasksRoutes.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(
 );
 
 app.use("/api/auth", authRoutes);
+app.use("/api/tasks", tasksRoutes);
 
 const PORT = 5000;
 

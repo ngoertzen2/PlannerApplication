@@ -4,6 +4,20 @@ CREATE TABLE users (
     password_hash TEXT NOT NULL
 );
 
+CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+    user_id integer NOT NULL,
+    title VARCHAR NOT NULL,
+    description TEXT,
+    completed BOOLEAN default FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    due_date TIMESTAMP WITH TIME ZONE,
+    
+    FOREIGN KEY (user_id)
+                   REFERENCES users(id)
+                   on DELETE CASCADE
+);
+
 INSERT INTO users (username, password_hash)
 VALUES (
   'admin',
