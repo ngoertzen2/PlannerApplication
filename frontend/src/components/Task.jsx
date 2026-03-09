@@ -1,5 +1,4 @@
 import React from "react";
-import {format, parseISO } from "date-fns";
 import { useNavigate} from "react-router-dom";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import GeneralButton from "../components/general/GeneralButton";
@@ -18,7 +17,10 @@ const TaskItem = ({ task, onToggleComplete }) => {
                     {description}
                 </p>
                 <p className="text-xs text-gray-500">
-                    {due_date && `Due: ${format(parseISO(due_date), 'dd/MM/yyyy')}`}
+                    {due_date && (() => {
+                        const [year, month, day] = due_date.slice(0, 10).split("-");
+                        return `Due: ${day}/${month}/${year}`;
+                    })()}
                 </p>
             </div>
 
