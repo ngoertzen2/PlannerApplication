@@ -10,8 +10,8 @@ CREATE TABLE tasks (
     title VARCHAR NOT NULL,
     description TEXT,
     completed BOOLEAN default FALSE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    due_date TIMESTAMP WITH TIME ZONE,
+    created_at DATE,
+    due_date DATE,
     
     FOREIGN KEY (user_id)
                    REFERENCES users(id)

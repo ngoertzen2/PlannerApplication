@@ -1,11 +1,12 @@
 import express from "express";
-import { createTask, removeTask, mark_done } from "../controllers/tasksController.js";
+import {createTask, removeTask, markDone, fetchTasks} from "../controllers/tasksController.js";
 import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/createTask", requireAuth, createTask);
 router.post("/removeTask", requireAuth, removeTask);
-router.post("/mark_done", requireAuth, mark_done);
+router.post("/markDone", requireAuth, markDone);
+router.get("/fetchTasks", requireAuth, fetchTasks);
 
 export default router;

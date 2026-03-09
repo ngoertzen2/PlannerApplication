@@ -1,13 +1,13 @@
 import pool from "../db/db.js";
 
 export const createTask = async (req, res) => {
-  const { title, description, due_date } = req.body;
+  const { title, description, created_at, due_date } = req.body;
   const user_id = req.session.user.id;
   try {
     const result = await pool.query(
-      "INSERT INTO tasks (title, description, due_date, user_id)" +
-      "VALUES ($1, $2, $3, $4)",
-      [title, description, due_date, user_id]
+      "INSERT INTO tasks (title, description, created_at, due_date, user_id)" +
+      "VALUES ($1, $2, $3, $4, $5)",
+      [title, description, created_at, due_date || null, user_id]
     );
 
     res.json({
@@ -20,10 +20,27 @@ export const createTask = async (req, res) => {
   }
 }
 
+export const fetchTasks = async (req, res) => {
+  const user_id = req.session.user.id;
+  
+  try{
+    const result = await pool.query(
+        "SELECT * FROM tasks WHERE user_id = $1",
+        [user_id]
+    );
+    
+    res.json(result.rows);
+    
+  }catch(err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch tasks" });
+  }
+}
+
 export const removeTask = async (req, res) => {
     
 }
 
-export const mark_done = async (req, res) => {
+export const markDone = async (req, res) => {
     
 }

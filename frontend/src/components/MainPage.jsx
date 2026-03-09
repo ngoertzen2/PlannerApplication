@@ -1,10 +1,50 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import GeneralButton from "../components/general/GeneralButton";
+import TaskItem from "../components/Task";
+import API_BASE from "../constants.js";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  
+  const [tasks, setTasks] = React.useState([]);
+  
+  React.useEffect(() => {
+      const fetchTasks = async () => {
+          try {
+
+              const res = await fetch(`${API_BASE}/tasks/fetchTasks`, {
+                  method: "GET",
+                  credentials: "include",
+              });
+              
+              const data = await res.json();
+              setTasks(data);
+              
+          } catch (error) {
+              console.log(error);
+          }
+      };
+      
+      fetchTasks();
+  }, []);
+
+    const today = new Intl.DateTimeFormat('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(new Date());
+    
+    const categorizedTasks = tasks.reduce(
+        (acc, task) => {
+            if (task.completed) acc.completed.push(task);
+            else if (task.due_date && task.due_date.slice(0,10) === today) acc.today.push(task);
+            else acc.upcoming.push(task);
+            return acc;
+        },
+        {today: [], upcoming: [], completed: []}
+    );
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-200 p-6">
@@ -46,6 +86,9 @@ const MainPage = () => {
           <h2 className="text-xl font-bold text-gray-700 mb-4">
             Today's Tasks
           </h2>
+            {categorizedTasks.today.map((task) => (
+                <TaskItem key={task.id} task={task}/>
+            ))}
         </div>
 
         {/* Upcoming */}
@@ -53,6 +96,9 @@ const MainPage = () => {
           <h2 className="text-xl font-bold text-gray-700 mb-4">
             Upcoming
           </h2>
+            {categorizedTasks.upcoming.map((task) => (
+                <TaskItem key={task.id} task={task}/>
+            ))}
         </div>
 
         {/* Completed */}
@@ -60,7 +106,9 @@ const MainPage = () => {
           <h2 className="text-xl font-bold text-gray-700 mb-4">
             Completed
           </h2>
-            
+            {categorizedTasks.completed.map((task) => (
+                <TaskItem key={task.id} task={task}/>
+            ))}
         </div>
 
       </div>

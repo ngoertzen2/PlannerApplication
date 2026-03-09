@@ -6,12 +6,17 @@ import API_BASE from "../constants.js";
 
 const CreatePage = () => {
     const navigate = useNavigate();
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Intl.DateTimeFormat('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(new Date());
 
     const [task, setTask] = React.useState({
         title: "",
         description: "",
-        dueDate: "",
+        created_at: today,
+        due_date: "",
     });
 
     const [errors, setErrors] = React.useState({
@@ -152,8 +157,8 @@ const CreatePage = () => {
 
                     <input
                         type="date"
-                        name="dueDate"
-                        value={task.dueDate}
+                        name="due_date"
+                        value={task.due_date}
                         min={today}
                         onChange={handleChange}
                         className="w-full border border-black p-2 outline-none"
