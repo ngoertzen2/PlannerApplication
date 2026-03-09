@@ -27,9 +27,10 @@ const GeneralButton = ({
     red: "border-red-900 text-red-900 hover:bg-red-900 disabled:text-red-900",
     blue: "border-blue-900 text-blue-900 hover:bg-blue-900 disabled:text-blue-900",
     black: "border-black text-black hover:bg-black",
-    green:
-      "border-green-900 text-green-900 hover:bg-green-900 disabled:text-green-900",
+    green: "border-green-900 text-green-900 hover:bg-green-900 disabled:text-green-900",
+    gray: "border-gray-800 text-gray-800 hover:bg-gray-800 disabled:text-gray-800",
   };
+  
   return (
     <Link to={to} target={openInNewTab ? "_blank" : "_self"}>
       <button

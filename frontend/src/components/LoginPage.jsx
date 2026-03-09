@@ -76,7 +76,8 @@ const LoginPage = () => {
       // success
       Swal.fire({
         icon: "success",
-        title: "Login Successful",
+        title: "Welcome",
+        text: "Login Successful",
         timer: 1200,
         showConfirmButton: false,
       });
@@ -206,7 +207,10 @@ const LoginPage = () => {
                 mode === "login" ? signIn() : registerUser();
               }}
             >
-              <GeneralButton text={mode === "login" ? "Login" : "Register"} />
+              <GeneralButton 
+              text={mode === "login" ? "Login" : "Register"} 
+              color={"blue"}
+              />
             </div>
           </div>
           <div className="mt-4 text-center text-sm text-gray-600">
