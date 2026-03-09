@@ -48,11 +48,12 @@ const CreatePage = () => {
         });
 
         try {
-            const res = await fetch(`${API_BASE}/tasks/create`, {
+            const res = await fetch(`${API_BASE}/tasks/createTask`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
                 body: JSON.stringify(task),
             });
 
@@ -92,9 +93,9 @@ const CreatePage = () => {
                 <GeneralButton
                     text={
                         <span className="flex items-center gap-2">
-              <FaArrowLeft />
-              Back
-            </span>
+                            <FaArrowLeft />
+                            Back
+                        </span>
                     }
                 />
             </div>
