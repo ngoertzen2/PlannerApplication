@@ -25,7 +25,7 @@ export const fetchTasks = async (req, res) => {
   
   try{
     const result = await pool.query(
-        "SELECT * FROM tasks WHERE user_id = $1",
+        "SELECT * FROM tasks WHERE user_id = $1 ORDER BY due_date ASC NULLS LAST",
         [user_id]
     );
     

@@ -39,7 +39,7 @@ const MainPage = () => {
     const categorizedTasks = tasks.reduce(
         (acc, task) => {
             if (task.completed) acc.completed.push(task);
-            else if (task.due_date && task.due_date.slice(0,10) === today) acc.today.push(task);
+            else if (!task.due_date || task.due_date.slice(0,10) === today) acc.today.push(task);
             else acc.upcoming.push(task);
             return acc;
         },

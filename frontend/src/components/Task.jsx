@@ -8,7 +8,7 @@ const TaskItem = ({ task, onToggleComplete }) => {
     const { title, description, due_date, created_at, completed } = task;
 
     return (
-        <div className="task-item p-4 bg-white rounded shadow flex justify-between items-start gap-4">
+        <div className="task-item mb-5 p-4 bg-white rounded shadow flex justify-between items-start gap-4">
             <div className="flex flex-col gap-1 flex-1">
                 <h3 className={`text-lg font-bold ${completed ? "line-through text-gray-400" : ""}`}>
                     {title}
@@ -17,7 +17,7 @@ const TaskItem = ({ task, onToggleComplete }) => {
                     {description}
                 </p>
                 <p className="text-xs text-gray-500">
-                    {due_date && (() => {
+                    {due_date && !completed && (() => {
                         const [year, month, day] = due_date.slice(0, 10).split("-");
                         return `Due: ${day}/${month}/${year}`;
                     })()}
