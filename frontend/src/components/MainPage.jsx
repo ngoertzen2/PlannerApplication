@@ -45,6 +45,39 @@ const MainPage = () => {
         },
         {today: [], upcoming: [], completed: []}
     );
+    
+    const toggleDone = async (task_id) => {
+        try{
+            const res = await fetch(`${API_BASE}/tasks/toggleDone/${task_id}`, {
+                method: "PATCH",
+                credentials: "include"
+            });
+
+            const updatedTask = await res.json();
+
+            setTasks(prev =>
+                prev.map(task =>
+                    task.id === task_id ? updatedTask : task
+                )
+            );
+        }catch (error) {
+            console.log(error);
+        }
+    }
+
+    const deleteTask = async (task_id) => {
+        try {
+            await fetch(`${API_BASE}/tasks/deleteTask/${task_id}`, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            setTasks(prev => prev.filter(task => task.id !== task_id));
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-200 p-6">
@@ -87,7 +120,7 @@ const MainPage = () => {
             Today's Tasks
           </h2>
             {categorizedTasks.today.map((task) => (
-                <TaskItem key={task.id} task={task}/>
+                <TaskItem key={task.id} task={task} toggleDone={toggleDone} deleteTask={deleteTask}/>
             ))}
         </div>
 
@@ -97,7 +130,7 @@ const MainPage = () => {
             Upcoming
           </h2>
             {categorizedTasks.upcoming.map((task) => (
-                <TaskItem key={task.id} task={task}/>
+                <TaskItem key={task.id} task={task} toggleDone={toggleDone} deleteTask={deleteTask}/>
             ))}
         </div>
 
@@ -107,7 +140,7 @@ const MainPage = () => {
             Completed
           </h2>
             {categorizedTasks.completed.map((task) => (
-                <TaskItem key={task.id} task={task}/>
+                <TaskItem key={task.id} task={task} toggleDone={toggleDone} deleteTask={deleteTask}/>
             ))}
         </div>
 
