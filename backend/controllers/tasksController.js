@@ -37,10 +37,45 @@ export const fetchTasks = async (req, res) => {
   }
 }
 
-export const removeTask = async (req, res) => {
-    
-}
+export const deleteTask = async (req, res) => {
+  console.log(req.body);
+  try {
+    const { task_id } = req.params;
+    const user_id = req.session.user.id;
 
-export const markDone = async (req, res) => {
+    const result = await pool.query(
+        `DELETE FROM tasks
+             WHERE id = $1 AND user_id = $2
+             RETURNING id`,
+        [task_id, user_id]
+    );
     
+    console.log(result);
+
+    if (result.rowCount === 0) {
+      return res.status(402).json({ message: "Task not found" });
+    }
+
+    res.json({ message: "Task deleted", id: task_id });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting task" });
+  }
+};
+
+export const toggleDone = async (req, res) => {
+  try{
+    const {task_id} = req.params;
+    const result = await pool.query(
+        "UPDATE tasks SET completed = NOT completed WHERE id = $1 RETURNING *",
+        [task_id]
+    );
+
+    res.json(result.rows[0]);
+
+  }catch(err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to adjust task" });
+  }
 }
