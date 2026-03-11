@@ -46,6 +46,18 @@ export const login = async (req, res) => {
   }
 };
 
+export const logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Logout failed" });
+    }
+
+    res.clearCookie("connect.sid", { path: "/" });
+    res.json({ success: true });
+  });
+};
+
 export const register = async (req, res) => {
   const { username, password } = req.body;
 
@@ -63,14 +75,4 @@ export const register = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Registration failed" });
   }
-};
-
-export const requireAuth = (req, res, next) => {
-  if (!req.session || !req.session.user) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
-
-  next();
 };

@@ -1,22 +1,116 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate} from "react-router-dom";
+import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import GeneralButton from "../components/general/GeneralButton";
+import TaskItem from "../components/Task";
+import API_BASE from "../constants.js";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  
+  const [tasks, setTasks] = React.useState([]);
+  
+  React.useEffect(() => {
+      const fetchTasks = async () => {
+          try {
+
+              const res = await fetch(`${API_BASE}/tasks/fetchTasks`, {
+                  method: "GET",
+                  credentials: "include",
+              });
+              
+              const data = await res.json();
+              setTasks(data);
+              
+          } catch (error) {
+              console.log(error);
+          }
+      };
+      
+      fetchTasks();
+  }, []);
+
+    const today = new Intl.DateTimeFormat('en-CA', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(new Date());
+    
+    const categorizedTasks = tasks.reduce(
+        (acc, task) => {
+            if (task.completed) acc.completed.push(task);
+            else if (!task.due_date || task.due_date.slice(0,10) === today) acc.today.push(task);
+            else acc.upcoming.push(task);
+            return acc;
+        },
+        {today: [], upcoming: [], completed: []}
+    );
 
   return (
-    <div className="min-h-screen flex bg-gray-200">
-      <div onClick={() => navigate(-1)}>
-        <GeneralButton
-          text={
-            <span className="flex items-center gap-2">
-              <FaArrowLeft />
-              Back
-            </span>
-          }
-        />
+    <div className="min-h-screen flex flex-col bg-gray-200 p-6">
+
+      {/* Top Navigation */}
+      <div className="flex items-center justify-between mb-6">
+        <div onClick={() => navigate(-1)}>
+            <GeneralButton
+              text={
+                <span className="flex items-center gap-2">
+                  <FaArrowLeft />
+                  Back
+                </span>
+              }
+            />
+        </div>
+
+        <h1 className="text-3xl font-bold text-gray-700">Planner Dashboard</h1>
+
+        <div
+          onClick={() => navigate("/create")}
+        >
+          <GeneralButton
+            text={
+              <span className="flex items-center gap-2">
+                <FaPlus />
+                New Task
+              </span>
+            }
+          />
+        </div>
+      </div>
+
+    {/* Planner Sections */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow">
+
+        {/* Today's Tasks */}
+        <div className="bg-white rounded-lg shadow-md p-5">
+          <h2 className="text-xl font-bold text-gray-700 mb-4">
+            Today's Tasks
+          </h2>
+            {categorizedTasks.today.map((task) => (
+                <TaskItem key={task.id} task={task}/>
+            ))}
+        </div>
+
+        {/* Upcoming */}
+        <div className="bg-white rounded-lg shadow-md p-5">
+          <h2 className="text-xl font-bold text-gray-700 mb-4">
+            Upcoming
+          </h2>
+            {categorizedTasks.upcoming.map((task) => (
+                <TaskItem key={task.id} task={task}/>
+            ))}
+        </div>
+
+        {/* Completed */}
+        <div className="bg-white rounded-lg shadow-md p-5">
+          <h2 className="text-xl font-bold text-gray-700 mb-4">
+            Completed
+          </h2>
+            {categorizedTasks.completed.map((task) => (
+                <TaskItem key={task.id} task={task}/>
+            ))}
+        </div>
+
       </div>
     </div>
   );

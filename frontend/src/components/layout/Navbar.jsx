@@ -17,7 +17,7 @@ const Navbar = () => {
       <h1 className="text-2xl font-bold">Planner Application</h1>
       {userData && (
         <div className="ml-auto gap-15 flex items-center">
-          <p className="text-sm mt-1">{userData.username}</p>
+          <p className="text-sm mt-1 mr-50">{userData.username}</p>
           <IoMenu 
             className=" ml-auto text-2xl ml-4 cursor-pointer transition-all duration-200 hover:text-gray-400" 
             onClick={() => {
