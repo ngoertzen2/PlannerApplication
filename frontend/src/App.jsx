@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import LoginPage from "./components/LoginPage.jsx"
 import MainPage from "./components/MainPage.jsx"
+import Layout from "./components/layout/Layout.jsx";
 import CreatePage from "./components/CreatePage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import { Routes, Route } from 'react-router-dom';
@@ -19,20 +20,22 @@ const App = () => {
 
     <div>            
       <UserDataContext.Provider value={contextValue}>
-        <Routes>
+        <Layout>
+          <Routes>
 
-          <Route path="/" element={
-            <ProtectedRoute>
-              <MainPage />
-            </ProtectedRoute>} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <MainPage />
+              </ProtectedRoute>} />
 
-          <Route path="/create" element={
-            <ProtectedRoute>
-              <CreatePage />
-            </ProtectedRoute>} />
+            <Route path="/create" element={
+              <ProtectedRoute>
+                <CreatePage />
+              </ProtectedRoute>} />
 
           <Route path="/login" element={<LoginPage />} />
-        </Routes>
+          </Routes>
+        </Layout>
       </UserDataContext.Provider>
     </div>
 

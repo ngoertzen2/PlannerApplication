@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import GeneralButton from "../components/general/GeneralButton";
 // React Router Dom
 import { useNavigate } from "react-router-dom";
@@ -15,23 +15,19 @@ const LoginPage = () => {
   const { userData, setUserData } = useContext(UserDataContext);
 
   //Use state hooks
-  const [login, setLogin] = React.useState({
+  const [login, setLogin] = useState({
     username: "",
     password: "",
   });
-  const [errors, setErrors] = React.useState({
+  const [errors, setErrors] = useState({
     username: false,
     password: false,
   });
   const [mode, setMode] = React.useState("login");
   const [showPassword, setShowPassword] = React.useState(false);
 
-  // redirect to logged in user
-  React.useEffect(() => {
-    if (userData) {
-      navigate("/");
-    }
-  }, [navigate, setUserData]);
+
+  
   const signIn = async () => {
 
     const newErrors = {};
@@ -77,7 +73,8 @@ const LoginPage = () => {
       // success
       Swal.fire({
         icon: "success",
-        title: "Login Successful",
+        title: "Welcome",
+        text: "Login Successful",
         timer: 1200,
         showConfirmButton: false,
       });
@@ -140,6 +137,23 @@ const LoginPage = () => {
       [e.target.name]: false,
     }));
   };
+  
+  // redirect to logged in user
+  useEffect(() => {
+    if (userData) {
+      navigate("/");
+    }
+  }, [navigate, setUserData]);
+
+  useEffect(() => {
+      const handleEnter = (e) => {
+        if (e.key === "Enter") signIn();
+      };
+  
+      document.addEventListener("keydown", handleEnter);
+  
+      return () => document.removeEventListener("keydown", handleEnter);
+    }, [signIn]);
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center">
       <div className="w-11/12 max-w-md bg-white px-8 py-10 rounded-lg shadow-lg">
@@ -207,7 +221,10 @@ const LoginPage = () => {
                 mode === "login" ? signIn() : registerUser();
               }}
             >
-              <GeneralButton text={mode === "login" ? "Login" : "Register"} />
+              <GeneralButton 
+              text={mode === "login" ? "Login" : "Register"} 
+              color={"blue"}
+              />
             </div>
           </div>
           <div className="mt-4 text-center text-sm text-gray-600">
