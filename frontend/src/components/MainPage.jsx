@@ -85,22 +85,23 @@ const MainPage = () => {
       {/* Top Navigation */}
       <div className="flex items-center justify-between mb-6">
         <div onClick={() => navigate(-1)}>
-            <GeneralButton
+            {/* <GeneralButton
               text={
                 <span className="flex items-center gap-2">
                   <FaArrowLeft />
                   Back
                 </span>
               }
-            />
+            /> */}
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-700">Planner Dashboard</h1>
+        <h1 className="text-3xl font-bold text-gray-700">Dashboard</h1>
 
         <div
           onClick={() => navigate("/create")}
         >
           <GeneralButton
+            color={"blue"}
             text={
               <span className="flex items-center gap-2">
                 <FaPlus />

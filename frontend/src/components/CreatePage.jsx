@@ -94,8 +94,9 @@ const CreatePage = () => {
         <div className="min-h-screen flex flex-col bg-gray-200 p-6">
 
             {/* Top Navigation */}
-            <div className="mb-6" onClick={() => navigate(-1)}>
+            <div className="mb-6 flex mr-auto" onClick={() => navigate(-1)}>
                 <GeneralButton
+                    color={"red"}
                     text={
                         <span className="flex items-center gap-2">
                             <FaArrowLeft />
@@ -167,7 +168,7 @@ const CreatePage = () => {
 
                 {/* Create Button */}
                 <div onClick={createTask}>
-                    <GeneralButton text="Create Task" />
+                    <GeneralButton text="Create Task" color="blue" />
                 </div>
 
             </div>

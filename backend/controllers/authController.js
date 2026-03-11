@@ -27,9 +27,6 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: invalidCredentialsMessage });
     }
 
-    console.log("User:", user);
-    console.log("Password hash:", user.password_hash);
-
     req.session.user = {
       id: user.id,
       username: user.username,
