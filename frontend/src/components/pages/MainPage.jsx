@@ -3,6 +3,7 @@ import { useNavigate} from "react-router-dom";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import GeneralButton from "../general/GeneralButton.jsx";
 import TaskItem from "../Task.jsx";
+import TaskEditModal from "../TaskEditModal.jsx";
 import API_BASE from "../../constants.js";
 import ColumnWrapper from "../ColumnWrapper.jsx";
 import confetti from "canvas-confetti";
@@ -13,6 +14,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   
   const [tasks, setTasks] = React.useState([]);
+  const [editingTask, setEditingTask] = React.useState(null);
   
   React.useEffect(() => {
     const fetchTasks = async () => {
@@ -213,26 +215,40 @@ const MainPage = () => {
         {/* Today's Tasks */}
         <ColumnWrapper id="today" title="Today">
           {categorizedTasks.today.map((task) => (
-            <TaskItem key={task.id} task={task} toggleDone={toggleDone} deleteTask={deleteTask}/>
+            <TaskItem key={task.id} task={task} toggleDone={toggleDone} onEdit={() => setEditingTask(task)} deleteTask={deleteTask}/>
           ))}
         </ColumnWrapper>
 
         {/* Upcoming */}
         <ColumnWrapper id="upcoming" title="Upcoming">
           {categorizedTasks.upcoming.map((task) => (
-            <TaskItem key={task.id} task={task} toggleDone={toggleDone} deleteTask={deleteTask}/>
+            <TaskItem key={task.id} task={task} toggleDone={toggleDone} onEdit={() => setEditingTask(task)} deleteTask={deleteTask}/>
           ))}
         </ColumnWrapper>
 
         {/* Completed */}
         <ColumnWrapper id="completed" title="Completed">
           {categorizedTasks.completed.map((task) => (
-            <TaskItem key={task.id} task={task} toggleDone={toggleDone} deleteTask={deleteTask}/>
+            <TaskItem key={task.id} task={task} toggleDone={toggleDone} onEdit={() => setEditingTask(task)} deleteTask={deleteTask}/>
           ))}
         </ColumnWrapper>
       </DndContext>
     </div>
+    <TaskEditModal
+      isOpen={!!editingTask}
+      task={editingTask}
+      onClose={() => setEditingTask(null)}
+      onSave={(updates) => {
+        updateTask(editingTask.id, {
+          title: updates.title,
+          description: updates.description,
+          due_date: updates.due_date,
+          completed: editingTask.completed,
+        });
+      }}
+    />
   </div>
+  
   );
 };
 

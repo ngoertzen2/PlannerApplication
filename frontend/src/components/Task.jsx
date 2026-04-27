@@ -1,7 +1,9 @@
-import { FaTrash } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import { useDraggable } from "@dnd-kit/core";
 
-const TaskItem = ({ task, toggleDone, deleteTask }) => {
+const TaskItem = ({ task, toggleDone, onEdit, deleteTask }) => {
+
   const { title, description, due_date, completed } = task;
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
@@ -44,8 +46,8 @@ const TaskItem = ({ task, toggleDone, deleteTask }) => {
         </p>
       </div>
 
-      {/* Checkbox */}
-      <div>
+      <div className="flex flex-col gap-3 justify-between items-center h-full">
+        {/* Checkbox */}
         <input
           type="checkbox"
           checked={completed}
@@ -53,16 +55,25 @@ const TaskItem = ({ task, toggleDone, deleteTask }) => {
           onChange={() => toggleDone(task.id)}
           className="w-5 h-5 hover:cursor-pointer"
         />
-      </div>
 
-      {/* Trash button */}
-      <button
-        onPointerDown={(e) => e.stopPropagation()}
-        onClick={() => deleteTask(task.id)}
-        className="absolute bottom-2 right-4.5 text-gray-400 hover:text-red-500 transition cursor-pointer"
-      >
-        <FaTrash />
-      </button>
+        {/* Edit button */}
+        <button
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={() => onEdit(task)}
+          className="text-gray-400 hover:text-blue-500 transition cursor-pointer"
+        >
+          <FaPencilAlt />
+        </button>
+
+        {/* Trash button */}
+        <button
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={() => deleteTask(task.id)}
+          className="text-gray-400 hover:text-red-500 transition cursor-pointer"
+        >
+          <FaTrash />
+        </button>
+      </div>
 
     </div>
   );
