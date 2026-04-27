@@ -176,7 +176,7 @@ const LoginPage = () => {
               value={login.username}
               onChange={handleChange}
               placeholder="Username..."
-              className="w-full border border-black bg-transparent p-2 outline-none resize-none"
+              className="w-full border border-black rounded bg-transparent p-2 outline-none resize-none"
               rows={1}
             />
             {errors.username && (
@@ -197,7 +197,7 @@ const LoginPage = () => {
                 value={login.password}
                 onChange={handleChange}
                 placeholder="Password..."
-                className="w-full border border-black bg-transparent p-2 pr-10 outline-none"
+                className="w-full border border-black rounded bg-transparent p-2 pr-10 outline-none"
               />
 
               <button

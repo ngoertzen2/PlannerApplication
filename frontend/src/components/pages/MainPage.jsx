@@ -188,7 +188,7 @@ const MainPage = () => {
   };
 
   return (
-  <div className="min-h-screen flex flex-col bg-gray-200 p-6">
+  <div className="flex flex-col bg-gray-200 p-6 flex-1 overflow-hidden">
     <div className="flex items-center justify-between mb-6">
       <h1 className="text-3xl font-bold text-gray-700">Dashboard</h1>
       <div

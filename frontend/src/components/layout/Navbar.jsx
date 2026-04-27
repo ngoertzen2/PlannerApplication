@@ -10,7 +10,6 @@ const Navbar = () => {
 
   const [openState, setOpenState] = React.useState(false);
   const { userData } = useContext(UserDataContext);
-  const location = useLocation();
   
   return (
     <nav className="bg-blue-900 text-white p-4 flex items-center">

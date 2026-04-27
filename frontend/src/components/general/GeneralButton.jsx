@@ -38,8 +38,8 @@ const GeneralButton = ({
         disabled={disabled}
         className={
           color
-            ? `w-full min-w-max border-2 px-1 py-2 font-primary font-bold transition-all duration-500 hover:text-white disabled:opacity-25 disabled:hover:bg-transparent ${extraClassAttributes} ${colorVariants[color]}`
-            : `w-full min-w-max border-2 border-black px-1 py-2 font-primary font-bold text-black transition-all duration-500 hover:bg-black hover:text-white disabled:opacity-25 disabled:hover:bg-transparent disabled:hover:text-black ${extraClassAttributes}`
+            ? `w-full min-w-max rounded border-2 px-1 py-2 font-primary font-bold transition-all duration-500 hover:text-white disabled:opacity-25 disabled:hover:bg-transparent ${extraClassAttributes} ${colorVariants[color]}`
+            : `w-full min-w-max rounded border-2 border-black px-1 py-2 font-primary font-bold text-black transition-all duration-500 hover:bg-black hover:text-white disabled:opacity-25 disabled:hover:bg-transparent disabled:hover:text-black ${extraClassAttributes}`
         }
       >
         {icon}

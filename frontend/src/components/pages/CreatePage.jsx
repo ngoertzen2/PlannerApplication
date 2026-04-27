@@ -124,7 +124,7 @@ const CreatePage = () => {
             value={task.title}
             onChange={handleChange}
             placeholder="Task title..."
-            className="w-full border border-black p-2 outline-none"
+            className="w-full rounded border border-black p-2 outline-none"
           />
 
           {errors.title && (
@@ -146,7 +146,7 @@ const CreatePage = () => {
             onChange={handleChange}
             placeholder="Task details..."
             rows={4}
-            className="w-full border border-black p-2 outline-none resize-none"
+            className="w-full border rounded border-black p-2 outline-none resize-none"
           />
         </div>
 
@@ -162,7 +162,7 @@ const CreatePage = () => {
             value={task.due_date}
             min={today}
             onChange={handleChange}
-            className="w-full border border-black p-2 outline-none"
+            className="w-full border rounded border-black p-2 outline-none"
           />
         </div>
 

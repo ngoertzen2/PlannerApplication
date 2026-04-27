@@ -16,11 +16,9 @@ const Layout = ({ children }) => {
   // Context State
   const { userData } = useContext(UserDataContext);
 
-  // Getting the first path of the window href
-
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className="flex-grow">
+    <div className="flex flex-col h-screen">
+      <div className="flex-1 min-h-0 flex flex-col">
         <Navbar />
         {children}
       </div>
