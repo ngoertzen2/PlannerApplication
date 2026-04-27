@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
-import LoginPage from "./components/LoginPage.jsx"
-import MainPage from "./components/MainPage.jsx"
+import LoginPage from "./components/pages/LoginPage.jsx"
+import MainPage from "./components/pages/MainPage.jsx"
 import Layout from "./components/layout/Layout.jsx";
-import CreatePage from "./components/CreatePage.jsx"
+import CreatePage from "./components/pages/CreatePage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import { Routes, Route } from 'react-router-dom';
 import UserDataContext from "../context/UserDataContext.jsx";

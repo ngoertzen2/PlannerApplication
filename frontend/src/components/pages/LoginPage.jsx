@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
-import GeneralButton from "../components/general/GeneralButton";
+import GeneralButton from "../general/GeneralButton.jsx";
 // React Router Dom
 import { useNavigate } from "react-router-dom";
 import { FaUserCircle, FaEye, FaEyeSlash } from "react-icons/fa";
-import API_BASE from "../constants.js";
-import UserDataContext from "../../context/UserDataContext";
+import API_BASE from "../../constants.js";
+import UserDataContext from "../../../context/UserDataContext.jsx";
 
 /**
  * @summary     Login page, redirects to MS Login
