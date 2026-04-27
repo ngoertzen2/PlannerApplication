@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import GeneralButton from "../components/general/GeneralButton";
-import API_BASE from "../constants.js";
+import GeneralButton from "../general/GeneralButton.jsx";
+import API_BASE from "../../constants.js";
 
 const CreatePage = () => {
     const navigate = useNavigate();

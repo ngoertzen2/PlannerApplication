@@ -38,7 +38,6 @@ export const fetchTasks = async (req, res) => {
 }
 
 export const deleteTask = async (req, res) => {
-  console.log(req.body);
   try {
     const { task_id } = req.params;
     const user_id = req.session.user.id;
@@ -49,8 +48,6 @@ export const deleteTask = async (req, res) => {
              RETURNING id`,
         [task_id, user_id]
     );
-    
-    console.log(result);
 
     if (result.rowCount === 0) {
       return res.status(402).json({ message: "Task not found" });
@@ -77,5 +74,31 @@ export const toggleDone = async (req, res) => {
   }catch(err) {
     console.error(err);
     res.status(500).json({ message: "Failed to adjust task" });
+  }
+}
+
+export const updateTask = async (req, res) => {
+  try {
+    const { task_id } = req.params;
+    const { title, description, due_date, completed } = req.body;
+    const user_id = req.session.user.id;
+
+    const result = await pool.query(
+      `UPDATE tasks
+       SET title = $1, description = $2, due_date = $3, completed = $4
+       WHERE id = $5 AND user_id = $6
+       RETURNING *`,
+      [title, description, due_date || null, completed, task_id, user_id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.json(result.rows[0]);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating task" });
   }
 }
