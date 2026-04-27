@@ -19,6 +19,7 @@ const TaskItem = ({ task, toggleDone, deleteTask }) => {
 
   return (
     <div 
+      data-task-id={task.id}
       ref={setNodeRef}
       style={style}
       {...listeners}

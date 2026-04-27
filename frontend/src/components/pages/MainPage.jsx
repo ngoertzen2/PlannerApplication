@@ -5,6 +5,7 @@ import GeneralButton from "../general/GeneralButton.jsx";
 import TaskItem from "../Task.jsx";
 import API_BASE from "../../constants.js";
 import ColumnWrapper from "../ColumnWrapper.jsx";
+import confetti from "canvas-confetti";
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 
@@ -42,6 +43,22 @@ const MainPage = () => {
   const today = formatter.format(new Date());
   const tomorrow = formatter.format(new Date(Date.now() + 86400000));
   
+  const fireConfettiForTask = (taskId) => {
+    const el = document.querySelector(`[data-task-id="${taskId}"]`);
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+
+    const x = (rect.left + rect.width / 2) / window.innerWidth;
+    const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { x, y }
+    });
+  };
+
   const categorizedTasks = tasks.reduce(
     (acc, task) => {
       if (task.completed) acc.completed.push(task);
@@ -66,6 +83,13 @@ const MainPage = () => {
           task.id === task_id ? updatedTask : task
         )
       );
+
+      if (updatedTask.completed) {
+        setTimeout(() => {
+          fireConfettiForTask(task_id);
+        }, 10);
+        
+      }
     }catch (error) {
       console.log(error);
     }
@@ -126,8 +150,6 @@ const MainPage = () => {
 
     if (newColumn === currentColumn) return;
 
-   
-
     let updates = {};
 
     if (newColumn === "completed") {
@@ -140,6 +162,10 @@ const MainPage = () => {
 
     if (newColumn === "upcoming") {
       updates = { completed: false, due_date: tomorrow };
+    }
+
+    if (newColumn === "completed" && currentColumn !== "completed") {
+      fireConfettiForTask(taskId);
     }
 
     setTasks(prev =>
