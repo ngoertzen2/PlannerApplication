@@ -1,7 +1,8 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL
+    password_hash TEXT NOT NULL,
+    theme TEXT DEFAULT 'light'
 );
 
 CREATE TABLE tasks (
@@ -17,6 +18,13 @@ CREATE TABLE tasks (
                    REFERENCES users(id)
                    on DELETE CASCADE
 );
+
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS theme TEXT DEFAULT 'light';
+
+UPDATE users
+SET theme = 'light'
+WHERE theme IS NULL;
 
 INSERT INTO users (username, password_hash)
 VALUES (

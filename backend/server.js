@@ -8,7 +8,7 @@ import FRONTEND_URL from "./constants.js";
 const app = express();
 
 app.use(cors({
-  origin: {FRONTEND_URL},
+  origin: FRONTEND_URL,
   credentials: true
 }));
 app.use(express.json());

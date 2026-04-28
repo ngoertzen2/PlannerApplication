@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate} from "react-router-dom";
 import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import GeneralButton from "../general/GeneralButton.jsx";
-import TaskItem from "../Task.jsx";
+import TaskItem from "../TaskItem.jsx";
 import TaskEditModal from "../TaskEditModal.jsx";
 import API_BASE from "../../constants.js";
 import ColumnWrapper from "../ColumnWrapper.jsx";
@@ -188,14 +188,14 @@ const MainPage = () => {
   };
 
   return (
-  <div className="flex flex-col bg-gray-200 p-6 flex-1 overflow-hidden">
+  <div className="flex flex-col bg-[var(--bg)] p-6 flex-1 overflow-hidden text-[var(--text)]">
     <div className="flex items-center justify-between mb-6">
-      <h1 className="text-3xl font-bold text-gray-700">Dashboard</h1>
+      <h1 className="text-3xl font-bold text-[var(--text)]">Dashboard</h1>
       <div
         onClick={() => navigate("/create")}
       >
         <GeneralButton
-        color={"blue"}
+        color={"primary"}
         text={
           <span className="flex items-center gap-2">
           <FaPlus />

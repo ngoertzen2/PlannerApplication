@@ -91,12 +91,12 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-200 p-6">
+    <div className="min-h-screen flex flex-col bg-[var(--bg)] p-6">
 
       {/* Top Navigation */}
       <div className="mb-6 flex mr-auto" onClick={() => navigate(-1)}>
         <GeneralButton
-          color={"red"}
+          color={"danger"}
           text={
             <span className="flex items-center gap-2">
               <FaArrowLeft />
@@ -107,9 +107,9 @@ const CreatePage = () => {
       </div>
 
       {/* Form Container */}
-      <div className="max-w-xl mx-auto w-full bg-white p-8 rounded-lg shadow-md">
+      <div className="max-w-xl mx-auto w-full bg-[var(--surface-1)] p-8 rounded-lg shadow-md">
 
-        <h1 className="text-3xl font-bold text-gray-700 mb-6">
+        <h1 className="text-3xl font-bold text-[var(--text)] mb-6">
           Create Planner Task
         </h1>
 
@@ -124,11 +124,11 @@ const CreatePage = () => {
             value={task.title}
             onChange={handleChange}
             placeholder="Task title..."
-            className="w-full rounded border border-black p-2 outline-none"
+            className="w-full rounded border border-[var(--border)] p-2 outline-none"
           />
 
           {errors.title && (
-            <p className="text-xs text-red-500">
+            <p className="text-xs text-[var(--danger)]">
               * Title is required
             </p>
           )}
@@ -146,7 +146,7 @@ const CreatePage = () => {
             onChange={handleChange}
             placeholder="Task details..."
             rows={4}
-            className="w-full border rounded border-black p-2 outline-none resize-none"
+            className="w-full border rounded border-[var(--border)] p-2 outline-none resize-none"
           />
         </div>
 
@@ -162,13 +162,13 @@ const CreatePage = () => {
             value={task.due_date}
             min={today}
             onChange={handleChange}
-            className="w-full border rounded border-black p-2 outline-none"
+            className="w-full border rounded border-[var(--border)] p-2 outline-none"
           />
         </div>
 
         {/* Create Button */}
         <div onClick={createTask}>
-          <GeneralButton text="Create Task" color="blue" />
+          <GeneralButton text="Create Task" color="primary" />
         </div>
 
       </div>

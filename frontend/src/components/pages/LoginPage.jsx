@@ -155,15 +155,15 @@ const LoginPage = () => {
       return () => document.removeEventListener("keydown", handleEnter);
     }, [signIn]);
   return (
-    <div className="min-h-screen bg-gray-200 flex items-center justify-center">
-      <div className="w-11/12 max-w-md bg-white px-8 py-10 rounded-lg shadow-lg">
+    <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center">
+      <div className="w-11/12 max-w-md bg-[var(--surface-1)] px-8 py-10 rounded-lg shadow-lg">
         <div className="mt-5 flex justify-center">
-          <FaUserCircle className="text-gray-500 text-6xl" />
+          <FaUserCircle className="text-[var(--text-muted)] text-6xl" />
         </div>
         
         {/* Login */}
         <>
-          <p className="mb-28 mt-3 text-center font-primary text-2xl font-bold text-gray-600">
+          <p className="mb-28 mt-3 text-center font-primary text-2xl font-bold text-[var(--text-secondary)]">
             {mode === "login" ? "Login" : "Create an Account"}
           </p>
 
@@ -176,11 +176,11 @@ const LoginPage = () => {
               value={login.username}
               onChange={handleChange}
               placeholder="Username..."
-              className="w-full border border-black rounded bg-transparent p-2 outline-none resize-none"
+              className="w-full border border-[var(--border)] rounded bg-transparent p-2 outline-none resize-none"
               rows={1}
             />
             {errors.username && (
-              <p className="font-primary text-xs font-thin text-red-500">
+              <p className="font-primary text-xs font-thin text-[var(--danger)]">
                 * This field is required
               </p>
             )}
@@ -197,19 +197,19 @@ const LoginPage = () => {
                 value={login.password}
                 onChange={handleChange}
                 placeholder="Password..."
-                className="w-full border border-black rounded bg-transparent p-2 pr-10 outline-none"
+                className="w-full border border-[var(--border)] rounded bg-transparent p-2 pr-10 outline-none"
               />
 
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]"
               >
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
             {errors.password && (
-              <p className="font-primary text-xs font-thin text-red-500">
+              <p className="font-primary text-xs font-thin text-[var(--danger)]">
                 * This field is required
               </p>
             )}
@@ -223,16 +223,16 @@ const LoginPage = () => {
             >
               <GeneralButton 
               text={mode === "login" ? "Login" : "Register"} 
-              color={"blue"}
+              color={"primary"}
               />
             </div>
           </div>
-          <div className="mt-4 text-center text-sm text-gray-600">
+          <div className="mt-4 text-center text-sm text-[var(--text-secondary)]">
             {mode === "login" ? (
               <>
                 Don't have an account?{" "}
                 <span
-                  className="cursor-pointer text-blue-600 hover:underline"
+                  className="cursor-pointer text-[var(--primary)] hover:underline"
                   onClick={() => setMode("register")}
                 >
                   Register
@@ -242,7 +242,7 @@ const LoginPage = () => {
               <>
                 Already have an account?{" "}
                 <span
-                  className="cursor-pointer text-blue-600 hover:underline"
+                  className="cursor-pointer text-[var(--primary)] hover:underline"
                   onClick={() => setMode("login")}
                 >
                   Login

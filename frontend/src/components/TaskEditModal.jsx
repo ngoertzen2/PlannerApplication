@@ -27,7 +27,7 @@ const TaskEditModal = ({ isOpen, onClose, task, onSave }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg p-6 w-96 shadow-lg"
+        className="bg-[var(--surface-1)] rounded-lg p-6 w-96 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-lg font-bold mb-4">Edit Task</h2>
@@ -57,7 +57,7 @@ const TaskEditModal = ({ isOpen, onClose, task, onSave }) => {
         <div className="flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="text-gray-500 px-3 py-1 rounded transition hover:bg-gray-100 hover:text-gray-700 active:scale-95"
+            className="text-[var(--text-muted)] px-3 py-1 rounded transition hover:bg-[var(--surface-2)] hover:text-[var(--text)] active:scale-95"
           >
             Cancel
           </button>
@@ -71,7 +71,7 @@ const TaskEditModal = ({ isOpen, onClose, task, onSave }) => {
               });
               onClose();
             }}
-            className="bg-blue-500 text-white px-3 py-1 rounded transition hover:bg-blue-600 hover:shadow-md active:scale-95"
+            className="bg-[var(--primary)] text-white px-3 py-1 rounded transition hover:bg-[var(--primary-hover)] hover:shadow-md active:scale-95"
           >
             Save
           </button>

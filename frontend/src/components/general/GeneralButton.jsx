@@ -24,6 +24,8 @@ const GeneralButton = ({
   openInNewTab = false,
 }) => {
   const colorVariants = {
+    primary: "border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] disabled:text-[var(--primary)]",
+    danger: "border-[var(--danger)] text-[var(--danger)] hover:bg-[var(--danger)] disabled:text-[var(--danger)]",
     red: "border-red-900 text-red-900 hover:bg-red-900 disabled:text-red-900",
     blue: "border-blue-900 text-blue-900 hover:bg-blue-900 disabled:text-blue-900",
     black: "border-black text-black hover:bg-black",
@@ -39,7 +41,7 @@ const GeneralButton = ({
         className={
           color
             ? `w-full min-w-max rounded border-2 px-1 py-2 font-primary font-bold transition-all duration-500 hover:text-white disabled:opacity-25 disabled:hover:bg-transparent ${extraClassAttributes} ${colorVariants[color]}`
-            : `w-full min-w-max rounded border-2 border-black px-1 py-2 font-primary font-bold text-black transition-all duration-500 hover:bg-black hover:text-white disabled:opacity-25 disabled:hover:bg-transparent disabled:hover:text-black ${extraClassAttributes}`
+            : `w-full min-w-max rounded border-2 border-[var(--border)] px-1 py-2 font-primary font-bold text-[var(--text)] transition-all duration-500 hover:bg-[var(--text)] hover:text-white disabled:opacity-25 disabled:hover:bg-transparent disabled:hover:text-[var(--text)] ${extraClassAttributes}`
         }
       >
         {icon}

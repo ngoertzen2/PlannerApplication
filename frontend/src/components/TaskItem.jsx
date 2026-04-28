@@ -26,19 +26,19 @@ const TaskItem = ({ task, toggleDone, onEdit, deleteTask }) => {
       style={style}
       {...listeners}
       {...attributes}
-      className="task-item relative mb-5 p-4 bg-gray-100 rounded shadow flex justify-between items-start gap-4 hover:bg-gray-200 transition cursor-grab"
+      className="task-item relative mb-5 p-4 bg-[var(--surface-2)] rounded shadow flex justify-between items-start gap-4 hover:bg-[var(--bg)] transition cursor-grab"
     >
 
       <div className="flex flex-col gap-1 flex-1">
-        <h3 className={`text-lg font-bold ${completed ? "line-through text-gray-400" : ""}`}>
+        <h3 className={`text-lg font-bold ${completed ? "line-through text-[var(--text-muted)]" : ""}`}>
           {title}
         </h3>
 
-        <p className={`text-sm ${completed ? "text-gray-400" : "text-gray-600"}`}>
+        <p className={`text-sm ${completed ? "text-[var(--text-muted)]" : "text-[var(--text-secondary)]"}`}>
           {description}
         </p>
 
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-[var(--text-secondary)]">
           {due_date && !completed && (() => {
             const [year, month, day] = due_date.slice(0,10).split("-");
             return `Due: ${month}/${day}/${year}`;
@@ -53,14 +53,14 @@ const TaskItem = ({ task, toggleDone, onEdit, deleteTask }) => {
           checked={completed}
           onPointerDown={(e) => e.stopPropagation()}
           onChange={() => toggleDone(task.id)}
-          className="w-5 h-5 hover:cursor-pointer"
+          className="w-5 h-5 accent-[var(--primary)] hover:cursor-pointer"
         />
 
         {/* Edit button */}
         <button
           onPointerDown={(e) => e.stopPropagation()}
           onClick={() => onEdit(task)}
-          className="text-gray-400 hover:text-blue-500 transition cursor-pointer"
+          className="text-[var(--text-muted)] hover:text-[var(--primary)] transition cursor-pointer"
         >
           <FaPencilAlt />
         </button>
@@ -69,7 +69,7 @@ const TaskItem = ({ task, toggleDone, onEdit, deleteTask }) => {
         <button
           onPointerDown={(e) => e.stopPropagation()}
           onClick={() => deleteTask(task.id)}
-          className="text-gray-400 hover:text-red-500 transition cursor-pointer"
+          className="text-[var(--text-muted)] hover:text-[var(--danger)] transition cursor-pointer"
         >
           <FaTrash />
         </button>

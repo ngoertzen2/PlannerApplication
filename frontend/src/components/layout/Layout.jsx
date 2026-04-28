@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, use } from "react";
 // Prop Types
 import PropTypes from "prop-types";
 // User Data Context
@@ -13,8 +13,10 @@ import Navbar from "./Navbar";
  */
 
 const Layout = ({ children }) => {
-  // Context State
-  const { userData } = useContext(UserDataContext);
+  const { userData } = React.useContext(UserDataContext);
+  const theme = userData?.theme || "light";
+
+  document.documentElement.setAttribute("data-theme", theme);
 
   return (
     <div className="flex flex-col h-screen">

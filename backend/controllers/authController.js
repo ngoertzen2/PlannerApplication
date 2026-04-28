@@ -30,6 +30,7 @@ export const login = async (req, res) => {
     req.session.user = {
       id: user.id,
       username: user.username,
+      theme: user.theme || "light",
     };
 
     res.json({
@@ -62,7 +63,7 @@ export const register = async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
 
     const result = await pool.query(
-      "INSERT INTO users (username, password_hash) VALUES ($1,$2) RETURNING id, username",
+      "INSERT INTO users (username, password_hash) VALUES ($1,$2) RETURNING id, username, theme",
       [username, hash]
     );
 
@@ -71,5 +72,30 @@ export const register = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Registration failed" });
+  }
+};
+
+export const updateTheme = async (req, res) => {
+  
+  try {
+    const user_id = req.session.user?.id;
+    const { theme } = req.body;
+
+    if (!user_id) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    await pool.query(
+      `UPDATE users
+       SET theme = $1
+       WHERE id = $2`,
+      [theme, user_id]
+    );
+
+    res.json({ success: true });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error updating theme" });
   }
 };
