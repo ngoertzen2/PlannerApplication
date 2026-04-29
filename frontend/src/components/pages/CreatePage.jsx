@@ -115,7 +115,7 @@ const CreatePage = () => {
 
         {/* Title */}
         <div className="mb-4">
-          <p className="font-primary text-lg font-bold">
+          <p className="font-primary text-lg font-bold text-[var(--text)]">
             Title
           </p>
 
@@ -136,7 +136,7 @@ const CreatePage = () => {
 
         {/* Description */}
         <div className="mb-4">
-          <p className="font-primary text-lg font-bold">
+          <p className="font-primary text-lg font-bold text-[var(--text)]">
             Description
           </p>
 
@@ -152,7 +152,7 @@ const CreatePage = () => {
 
         {/* Due Date */}
         <div className="mb-6">
-          <p className="font-primary text-lg font-bold">
+          <p className="font-primary text-lg font-bold text-[var(--text)]">
             Due Date
           </p>
 

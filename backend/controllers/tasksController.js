@@ -65,7 +65,10 @@ export const toggleDone = async (req, res) => {
   try{
     const {task_id} = req.params;
     const result = await pool.query(
-        "UPDATE tasks SET completed = NOT completed WHERE id = $1 RETURNING *",
+        `UPDATE tasks
+         SET completed = NOT completed,
+             completed_at = CASE WHEN NOT completed THEN NOW() ELSE NULL END
+         WHERE id = $1 RETURNING *`,
         [task_id]
     );
 
@@ -85,7 +88,8 @@ export const updateTask = async (req, res) => {
 
     const result = await pool.query(
       `UPDATE tasks
-       SET title = $1, description = $2, due_date = $3, completed = $4
+       SET title = $1, description = $2, due_date = $3, completed = $4,
+           completed_at = CASE WHEN $4 = TRUE THEN COALESCE(completed_at, NOW()) ELSE NULL END
        WHERE id = $5 AND user_id = $6
        RETURNING *`,
       [title, description, due_date || null, completed, task_id, user_id]
