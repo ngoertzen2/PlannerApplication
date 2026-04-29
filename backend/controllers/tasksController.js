@@ -25,7 +25,9 @@ export const fetchTasks = async (req, res) => {
   
   try{
     const result = await pool.query(
-        "SELECT * FROM tasks WHERE user_id = $1 ORDER BY due_date ASC NULLS LAST",
+        `SELECT * FROM tasks WHERE user_id = $1
+         ORDER BY due_date ASC NULLS LAST,
+           CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 ELSE 4 END ASC`,
         [user_id]
     );
     
