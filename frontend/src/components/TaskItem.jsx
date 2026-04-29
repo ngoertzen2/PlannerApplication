@@ -4,7 +4,13 @@ import { useDraggable } from "@dnd-kit/core";
 
 const TaskItem = ({ task, toggleDone, onEdit, deleteTask }) => {
 
-  const { title, description, due_date, completed } = task;
+  const { title, description, due_date, completed, priority } = task;
+
+  const priorityStyles = {
+    low:    "bg-blue-100 text-blue-700",
+    medium: "bg-yellow-100 text-yellow-700",
+    high:   "bg-red-100 text-red-700",
+  };
 
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: task.id,
@@ -44,6 +50,12 @@ const TaskItem = ({ task, toggleDone, onEdit, deleteTask }) => {
             return `Due: ${month}/${day}/${year}`;
           })()}
         </p>
+
+        {priority && priority !== "none" && (
+          <span className={`self-start text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${priorityStyles[priority]}`}>
+            {priority}
+          </span>
+        )}
       </div>
 
       <div className="flex flex-col gap-3 justify-between items-center h-full">

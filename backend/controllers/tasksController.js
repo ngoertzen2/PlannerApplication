@@ -1,13 +1,13 @@
 import pool from "../db/db.js";
 
 export const createTask = async (req, res) => {
-  const { title, description, created_at, due_date } = req.body;
+  const { title, description, created_at, due_date, priority } = req.body;
   const user_id = req.session.user.id;
   try {
     const result = await pool.query(
-      "INSERT INTO tasks (title, description, created_at, due_date, user_id)" +
-      "VALUES ($1, $2, $3, $4, $5)",
-      [title, description, created_at, due_date || null, user_id]
+      "INSERT INTO tasks (title, description, created_at, due_date, user_id, priority)" +
+      "VALUES ($1, $2, $3, $4, $5, $6)",
+      [title, description, created_at, due_date || null, user_id, priority || 'none']
     );
 
     res.json({
@@ -25,7 +25,9 @@ export const fetchTasks = async (req, res) => {
   
   try{
     const result = await pool.query(
-        "SELECT * FROM tasks WHERE user_id = $1 ORDER BY due_date ASC NULLS LAST",
+        `SELECT * FROM tasks WHERE user_id = $1
+         ORDER BY due_date ASC NULLS LAST,
+           CASE priority WHEN 'high' THEN 1 WHEN 'medium' THEN 2 WHEN 'low' THEN 3 ELSE 4 END ASC`,
         [user_id]
     );
     
@@ -65,7 +67,10 @@ export const toggleDone = async (req, res) => {
   try{
     const {task_id} = req.params;
     const result = await pool.query(
-        "UPDATE tasks SET completed = NOT completed WHERE id = $1 RETURNING *",
+        `UPDATE tasks
+         SET completed = NOT completed,
+             completed_at = CASE WHEN NOT completed THEN NOW() ELSE NULL END
+         WHERE id = $1 RETURNING *`,
         [task_id]
     );
 
@@ -80,15 +85,17 @@ export const toggleDone = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { task_id } = req.params;
-    const { title, description, due_date, completed } = req.body;
+    const { title, description, due_date, completed, priority } = req.body;
     const user_id = req.session.user.id;
 
     const result = await pool.query(
       `UPDATE tasks
-       SET title = $1, description = $2, due_date = $3, completed = $4
-       WHERE id = $5 AND user_id = $6
+       SET title = $1, description = $2, due_date = $3, completed = $4,
+           completed_at = CASE WHEN $4 = TRUE THEN COALESCE(completed_at, NOW()) ELSE NULL END,
+           priority = $5
+       WHERE id = $6 AND user_id = $7
        RETURNING *`,
-      [title, description, due_date || null, completed, task_id, user_id]
+      [title, description, due_date || null, completed, priority || 'none', task_id, user_id]
     );
 
     if (result.rowCount === 0) {

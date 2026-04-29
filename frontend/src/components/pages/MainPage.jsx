@@ -16,23 +16,20 @@ const MainPage = () => {
   const [tasks, setTasks] = React.useState([]);
   const [editingTask, setEditingTask] = React.useState(null);
   
-  React.useEffect(() => {
-    const fetchTasks = async () => {
-      try {
+  const fetchTasks = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/tasks/fetchTasks`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await res.json();
+      setTasks(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-        const res = await fetch(`${API_BASE}/tasks/fetchTasks`, {
-          method: "GET",
-          credentials: "include",
-        });
-        
-        const data = await res.json();
-        setTasks(data);
-        
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    
+  React.useEffect(() => {
     fetchTasks();
   }, []);
 
@@ -122,13 +119,8 @@ const MainPage = () => {
         body: JSON.stringify(updates),
       });
 
-      const updatedTask = await res.json();
-
-      setTasks(prev =>
-        prev.map(task =>
-          task.id === taskId ? updatedTask : task
-        )
-      );
+      await res.json();
+      await fetchTasks();
     } catch (error) {
       console.log(error);
     }
@@ -184,6 +176,7 @@ const MainPage = () => {
       description: fullTask.description,
       due_date: updates.due_date ?? fullTask.due_date,
       completed: updates.completed ?? fullTask.completed,
+      priority: fullTask.priority,
     });
   };
 
@@ -244,6 +237,7 @@ const MainPage = () => {
           description: updates.description,
           due_date: updates.due_date,
           completed: editingTask.completed,
+          priority: updates.priority,
         });
       }}
     />

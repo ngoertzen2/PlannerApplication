@@ -22,6 +22,12 @@ CREATE TABLE tasks (
 ALTER TABLE users
 ADD COLUMN IF NOT EXISTS theme TEXT DEFAULT 'light';
 
+ALTER TABLE tasks
+ADD COLUMN IF NOT EXISTS completed_at TIMESTAMPTZ;
+
+ALTER TABLE tasks
+ADD COLUMN IF NOT EXISTS priority TEXT DEFAULT 'none';
+
 UPDATE users
 SET theme = 'light'
 WHERE theme IS NULL;
