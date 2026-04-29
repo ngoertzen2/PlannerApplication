@@ -184,6 +184,7 @@ const MainPage = () => {
       description: fullTask.description,
       due_date: updates.due_date ?? fullTask.due_date,
       completed: updates.completed ?? fullTask.completed,
+      priority: fullTask.priority,
     });
   };
 
@@ -244,6 +245,7 @@ const MainPage = () => {
           description: updates.description,
           due_date: updates.due_date,
           completed: editingTask.completed,
+          priority: updates.priority,
         });
       }}
     />

@@ -1,13 +1,13 @@
 import pool from "../db/db.js";
 
 export const createTask = async (req, res) => {
-  const { title, description, created_at, due_date } = req.body;
+  const { title, description, created_at, due_date, priority } = req.body;
   const user_id = req.session.user.id;
   try {
     const result = await pool.query(
-      "INSERT INTO tasks (title, description, created_at, due_date, user_id)" +
-      "VALUES ($1, $2, $3, $4, $5)",
-      [title, description, created_at, due_date || null, user_id]
+      "INSERT INTO tasks (title, description, created_at, due_date, user_id, priority)" +
+      "VALUES ($1, $2, $3, $4, $5, $6)",
+      [title, description, created_at, due_date || null, user_id, priority || 'none']
     );
 
     res.json({
@@ -83,16 +83,17 @@ export const toggleDone = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { task_id } = req.params;
-    const { title, description, due_date, completed } = req.body;
+    const { title, description, due_date, completed, priority } = req.body;
     const user_id = req.session.user.id;
 
     const result = await pool.query(
       `UPDATE tasks
        SET title = $1, description = $2, due_date = $3, completed = $4,
-           completed_at = CASE WHEN $4 = TRUE THEN COALESCE(completed_at, NOW()) ELSE NULL END
-       WHERE id = $5 AND user_id = $6
+           completed_at = CASE WHEN $4 = TRUE THEN COALESCE(completed_at, NOW()) ELSE NULL END,
+           priority = $5
+       WHERE id = $6 AND user_id = $7
        RETURNING *`,
-      [title, description, due_date || null, completed, task_id, user_id]
+      [title, description, due_date || null, completed, priority || 'none', task_id, user_id]
     );
 
     if (result.rowCount === 0) {

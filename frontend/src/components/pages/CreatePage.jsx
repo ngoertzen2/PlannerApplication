@@ -17,6 +17,7 @@ const CreatePage = () => {
     description: "",
     created_at: today,
     due_date: "",
+    priority: "none",
   });
 
   const [errors, setErrors] = React.useState({
@@ -151,7 +152,7 @@ const CreatePage = () => {
         </div>
 
         {/* Due Date */}
-        <div className="mb-6">
+        <div className="mb-4">
           <p className="font-primary text-lg font-bold text-[var(--text)]">
             Due Date
           </p>
@@ -164,6 +165,25 @@ const CreatePage = () => {
             onChange={handleChange}
             className="w-full border rounded border-[var(--border)] p-2 outline-none"
           />
+        </div>
+
+        {/* Priority */}
+        <div className="mb-6">
+          <p className="font-primary text-lg font-bold text-[var(--text)]">
+            Priority
+          </p>
+
+          <select
+            name="priority"
+            value={task.priority}
+            onChange={handleChange}
+            className="w-full border rounded border-[var(--border)] p-2 outline-none bg-[var(--surface-1)] text-[var(--text)]"
+          >
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
         </div>
 
         {/* Create Button */}

@@ -4,6 +4,7 @@ const TaskEditModal = ({ isOpen, onClose, task, onSave }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [priority, setPriority] = useState("none");
 
   const today = new Intl.DateTimeFormat('en-CA', {
     year: 'numeric',
@@ -16,6 +17,7 @@ const TaskEditModal = ({ isOpen, onClose, task, onSave }) => {
       setTitle(task.title || "");
       setDescription(task.description || "");
       setDueDate(task.due_date ? task.due_date.slice(0, 10) : "");
+      setPriority(task.priority || "none");
     }
   }, [task]);
 
@@ -51,8 +53,19 @@ const TaskEditModal = ({ isOpen, onClose, task, onSave }) => {
           value={dueDate}
           min={today}
           onChange={(e) => setDueDate(e.target.value)}
-          className="w-full border rounded px-2 py-1 mb-4"
+          className="w-full border rounded px-2 py-1 mb-3"
         />
+
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+          className="w-full border rounded px-2 py-1 mb-4 bg-[var(--surface-1)] text-[var(--text)]"
+        >
+          <option value="none">None</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
 
         <div className="flex justify-end gap-2">
           <button
@@ -68,6 +81,7 @@ const TaskEditModal = ({ isOpen, onClose, task, onSave }) => {
                 title,
                 description,
                 due_date: dueDate || null,
+                priority,
               });
               onClose();
             }}
