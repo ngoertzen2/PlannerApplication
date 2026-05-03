@@ -125,7 +125,7 @@ const CreatePage = () => {
             value={task.title}
             onChange={handleChange}
             placeholder="Task title..."
-            className="w-full rounded border border-[var(--border)] p-2 outline-none"
+            className="w-full rounded placeholder-[var(--text-secondary)] border border-[var(--border)] p-2 outline-none"
           />
 
           {errors.title && (
@@ -147,7 +147,7 @@ const CreatePage = () => {
             onChange={handleChange}
             placeholder="Task details..."
             rows={4}
-            className="w-full border rounded border-[var(--border)] p-2 outline-none resize-none"
+            className="w-full border placeholder-[var(--text-secondary)] rounded border-[var(--border)] p-2 outline-none resize-none"
           />
         </div>
 
@@ -163,7 +163,7 @@ const CreatePage = () => {
             value={task.due_date}
             min={today}
             onChange={handleChange}
-            className="w-full border rounded border-[var(--border)] p-2 outline-none"
+            className="w-full border rounded text-[var(--text-secondary)] placeholder-[var(--text-secondary)] border-[var(--border)] p-2 outline-none"
           />
         </div>
 
@@ -177,7 +177,7 @@ const CreatePage = () => {
             name="priority"
             value={task.priority}
             onChange={handleChange}
-            className="w-full border rounded border-[var(--border)] p-2 outline-none bg-[var(--surface-1)] text-[var(--text)]"
+            className="w-full border rounded border-[var(--border)] p-2 outline-none bg-[var(--surface-1)] text-[var(--text-secondary)]"
           >
             <option value="none">None</option>
             <option value="low">Low</option>
